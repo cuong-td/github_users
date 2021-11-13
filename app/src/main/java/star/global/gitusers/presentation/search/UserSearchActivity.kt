@@ -1,6 +1,7 @@
 package star.global.gitusers.presentation.search
 
 import android.os.Bundle
+import android.os.SystemClock
 import android.view.inputmethod.EditorInfo
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -60,6 +61,7 @@ class UserSearchActivity : AppCompatActivity() {
             with(rvResults) {
                 adapter = UserSearchAdapter {
                     // Open User Detail
+                    println("TdcTest: Click open detail - ${it.username}: " + SystemClock.elapsedRealtime())
                 }
                 addItemDecoration(
                     DividerItemDecoration(

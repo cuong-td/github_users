@@ -1,16 +1,23 @@
 package star.global.gitusers.presentation.search
 
+import android.os.SystemClock
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import star.global.gitusers.databinding.ItemSearchBinding
 import star.global.gitusers.domain.user.BriefUser
-import star.global.gitusers.extension.setOnDebounceClick
 
-class UserSearchAdapter(private val itemClick: (String) -> Unit) :
+class UserSearchAdapter(private val itemClick: (BriefUser) -> Unit) :
     ListAdapter<BriefUser, Holder>(DiffCallback()) {
+    companion object {
+        private const val DEBOUNCE_TIME = 500
+    }
+
+    private var startClickTime: Long = 0
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val viewBinding = ItemSearchBinding.inflate(
             LayoutInflater.from(parent.context),
@@ -25,8 +32,16 @@ class UserSearchAdapter(private val itemClick: (String) -> Unit) :
     override fun onBindViewHolder(holder: Holder, position: Int) {
         val itemData = getItem(position)
         holder.bindData(itemData)
-        holder.itemView.setOnDebounceClick {
-            itemClick(itemData.username)
+        holder.itemView.debounceClick { itemClick(itemData) }
+    }
+
+    private fun View.debounceClick(action: () -> Unit) {
+        setOnClickListener {
+            val now = SystemClock.elapsedRealtime()
+            if (now - startClickTime < DEBOUNCE_TIME)
+                return@setOnClickListener
+            action()
+            startClickTime = now
         }
     }
 }

@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyCodebase">
-        <activity android:name="star.global.gitusers.MainActivity">
+        <activity android:name="star.global.gitusers.presentation.search.UserSearchActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

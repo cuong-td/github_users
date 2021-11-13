@@ -1,38 +1,30 @@
-package com.nab.weatherforecast
+package star.global.gitusers
 
-import com.nab.weatherforecast.data.di.DaggerDataComponent
-import com.nab.weatherforecast.data.di.DataComponent
-import com.nab.weatherforecast.data.di.DataConfigs
-import com.nab.weatherforecast.di.DaggerAppComponent
-import com.nab.weatherforecast.framework.di.DaggerFrameworkComponent
-import com.nab.weatherforecast.framework.di.FrameworkComponent
-import com.nab.weatherforecast.usecase.di.DaggerUseCasesComponent
-import com.nab.weatherforecast.usecase.di.UseCasesComponent
-import star.global.gitusers.App
+import star.global.gitusers.data.deps.DaggerDataComponent
+import star.global.gitusers.data.deps.DataComponent
+import star.global.gitusers.data.deps.DataConfigs
 import star.global.gitusers.deps.AppComponent
+import star.global.gitusers.deps.DaggerAppComponent
+import star.global.gitusers.usecase.deps.DaggerUseCasesComponent
+import star.global.gitusers.usecase.deps.UseCasesComponent
 
-open class DiDelegate(private val app: App) {
-    private val frameworkComponent: FrameworkComponent by lazy {
-        DaggerFrameworkComponent.builder()
-            .bindContext(app)
-            .build()
-    }
+open class DiDelegate() {
 
     private val dataComponent: DataComponent by lazy {
         DaggerDataComponent.builder()
-            .bindLocalSource(frameworkComponent.localSource)
-            .bindConfigurations(DataConfigs(BuildConfig.BASE_URL, BuildConfig.API_KEY))
+            .bindConfigurations(DataConfigs(BuildConfig.BASE_URL))
             .build()
     }
 
     private val useCasesComponent: UseCasesComponent by lazy {
         DaggerUseCasesComponent.builder()
-            .bindWeatherForecastRepo(dataComponent.weatherForecastRepo)
+            .bindUserRepository(dataComponent.userRepo)
             .build()
     }
     open val appComponent: AppComponent by lazy {
         DaggerAppComponent.builder()
-            .bindUseCases(useCasesComponent.useCases)
+            .bindUseCaseFindUsers(useCasesComponent.findUsers)
+            .bindUseCaseGetUser(useCasesComponent.getUser)
             .build()
     }
 

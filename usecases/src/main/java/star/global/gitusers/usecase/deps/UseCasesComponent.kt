@@ -11,7 +11,7 @@ interface UseCasesComponent : UseCasesExposeProvider {
     @Component.Builder
     interface Builder {
         @BindsInstance
-        fun bindRepo(repo: UserRepository): Builder
+        fun bindUserRepository(repo: UserRepository): Builder
         fun build(): UseCasesComponent
     }
 }

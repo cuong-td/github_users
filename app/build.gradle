@@ -5,15 +5,17 @@ plugins {
 }
 
 android {
-    compileSdkVersion 31
-    buildToolsVersion "31.0.0"
+    compileSdkVersion project.sdk_version
+    buildToolsVersion project.tools_version
 
     defaultConfig {
         applicationId "star.global.gitusers"
-        minSdkVersion 16
-        targetSdkVersion 31
+        minSdkVersion project.min_version
+        targetSdkVersion project.target_version
         versionCode 1
         versionName "1.0"
+
+        buildConfigField("String", "BASE_URL", "\"https://api.github.com/\"")
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -31,6 +33,9 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    buildFeatures {
+        dataBinding true
+    }
 }
 
 dependencies {
@@ -39,7 +44,7 @@ dependencies {
     implementation project(':usecases')
     implementation project(':data')
 
-    implementation "androidx.core:core-ktx:1.7.0"
+    implementation "androidx.core:core-ktx:1.6.0"
     implementation "androidx.fragment:fragment-ktx:1.3.6"
     implementation 'androidx.appcompat:appcompat:1.3.1'
     implementation 'com.google.android.material:material:1.4.0'
@@ -55,7 +60,10 @@ dependencies {
     kapt "com.google.dagger:dagger-android-processor:$dagger_version"
     kapt "com.google.dagger:dagger-compiler:$dagger_version"
 
-    testImplementation 'junit:junit:4.+'
+    implementation "com.github.bumptech.glide:glide:$glide_version"
+    kapt "com.github.bumptech.glide:compiler:$glide_version"
+
+    testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 }

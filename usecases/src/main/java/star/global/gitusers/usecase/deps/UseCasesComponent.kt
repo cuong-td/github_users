@@ -1,6 +1,8 @@
 package star.global.gitusers.usecase.deps
 
+import dagger.BindsInstance
 import dagger.Component
+import star.global.gitusers.data.repository.UserRepository
 import javax.inject.Singleton
 
 @Singleton
@@ -8,8 +10,8 @@ import javax.inject.Singleton
 interface UseCasesComponent : UseCasesExposeProvider {
     @Component.Builder
     interface Builder {
-        //        @BindsInstance
-//        fun bindRepo(repo: Repository): Builder
+        @BindsInstance
+        fun bindRepo(repo: UserRepository): Builder
         fun build(): UseCasesComponent
     }
 }

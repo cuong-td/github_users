@@ -1,9 +1,10 @@
 package star.global.gitusers.usecase.deps
 
-import star.global.gitusers.usecase.DoSomething
+import star.global.gitusers.usecase.FindUsers
+import star.global.gitusers.usecase.GetUserDetail
 
 
 interface UseCasesExposeProvider {
-    // TODO: Declare UseCase interface
-    val doSomething: DoSomething
+    val findUsers: FindUsers
+    val getUser: GetUserDetail
 }

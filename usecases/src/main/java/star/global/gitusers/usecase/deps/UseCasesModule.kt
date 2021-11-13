@@ -1,15 +1,20 @@
 package star.global.gitusers.usecase.deps
 
-import star.global.gitusers.usecase.DoSomething
-import star.global.gitusers.usecase.impl.DoSomethingImpl
 import dagger.Binds
 import dagger.Module
+import star.global.gitusers.usecase.FindUsers
+import star.global.gitusers.usecase.GetUserDetail
+import star.global.gitusers.usecase.impl.FindUsersImpl
+import star.global.gitusers.usecase.impl.GetUserImpl
 import javax.inject.Singleton
 
 @Module
 abstract class UseCasesModule {
-    // TODO: Binds UseCase implementation
     @Binds
     @Singleton
-    abstract fun bindDoSomething(impl: DoSomethingImpl): DoSomething
+    abstract fun bindFindUsers(impl: FindUsersImpl): FindUsers
+
+    @Binds
+    @Singleton
+    abstract fun bindGetUser(impl: GetUserImpl): GetUserDetail
 }

@@ -1,4 +1,4 @@
-package star.global.gitusers.presentation.search
+package star.global.gitusers.utilities
 
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter

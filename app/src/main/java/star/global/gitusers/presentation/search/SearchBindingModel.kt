@@ -8,7 +8,7 @@ import star.global.gitusers.R
 import star.global.gitusers.domain.Either
 import star.global.gitusers.domain.user.BriefUser
 
-class UserSearchBindingModel {
+class SearchBindingModel {
     val errorVisibility = ObservableInt(View.VISIBLE)
     val errorMessage = ObservableField("")
     val loadingVisibility = ObservableInt(View.GONE)

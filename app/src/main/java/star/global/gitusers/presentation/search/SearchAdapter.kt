@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import star.global.gitusers.databinding.ItemSearchBinding
 import star.global.gitusers.domain.user.BriefUser
 
-class UserSearchAdapter(private val itemClick: (BriefUser) -> Unit) :
+class SearchAdapter(private val itemClick: (BriefUser) -> Unit) :
     ListAdapter<BriefUser, Holder>(DiffCallback()) {
     companion object {
         private const val DEBOUNCE_TIME = 500

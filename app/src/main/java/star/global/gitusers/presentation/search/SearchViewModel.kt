@@ -18,7 +18,7 @@ import star.global.gitusers.usecase.FindUsers
 import star.global.gitusers.usecase.GetUserDetail
 import javax.inject.Inject
 
-class UserSearchViewModel
+class SearchViewModel
 @Inject
 constructor(
     private val findUsers: FindUsers,
@@ -52,7 +52,7 @@ constructor(
         searchJob = viewModelScope.launch {
             searchState.setData(SearchState.LoadingState(page == 1))
             lastKeywords = keywords
-            this@UserSearchViewModel.page = page
+            this@SearchViewModel.page = page
             if (page == 1) lastResults = emptyList()
 
             findUsers(keywords, page)

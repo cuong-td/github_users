@@ -16,11 +16,11 @@ import star.global.gitusers.databinding.ActivitySearchBinding
 import star.global.gitusers.extension.hideKeyboard
 import javax.inject.Inject
 
-class UserSearchActivity : AppCompatActivity() {
+class SearchActivity : AppCompatActivity() {
     @Inject
     lateinit var vmFactory: ViewModelProvider.Factory
 
-    private val viewModel by viewModels<UserSearchViewModel> { vmFactory }
+    private val viewModel by viewModels<SearchViewModel> { vmFactory }
 
     private lateinit var viewBinding: ActivitySearchBinding
 
@@ -34,9 +34,9 @@ class UserSearchActivity : AppCompatActivity() {
 
     private fun setupViewBinding(viewBinding: ActivitySearchBinding) {
         with(viewBinding) {
-            bindingModel = UserSearchBindingModel().apply {
+            bindingModel = SearchBindingModel().apply {
                 bind(
-                    this@UserSearchActivity,
+                    this@SearchActivity,
                     SearchState.InitState
                 )
             }
@@ -57,13 +57,13 @@ class UserSearchActivity : AppCompatActivity() {
             }
 
             with(rvResults) {
-                adapter = UserSearchAdapter {
+                adapter = SearchAdapter {
                     // Open User Detail
                     println("TdcTest: Click open detail - ${it.username}: " + SystemClock.elapsedRealtime())
                 }
                 addItemDecoration(
                     DividerItemDecoration(
-                        this@UserSearchActivity,
+                        this@SearchActivity,
                         DividerItemDecoration.VERTICAL
                     )
                 )

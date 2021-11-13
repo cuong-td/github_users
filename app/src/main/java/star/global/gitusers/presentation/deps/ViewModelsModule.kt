@@ -4,12 +4,12 @@ import androidx.lifecycle.ViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
-import star.global.gitusers.presentation.search.UserSearchViewModel
+import star.global.gitusers.presentation.search.SearchViewModel
 
 @Module
 abstract class ViewModelsModule {
     @Binds
     @IntoMap
-    @ViewModelKey(UserSearchViewModel::class)
-    abstract fun bindUserSearchViewModel(vm: UserSearchViewModel): ViewModel
+    @ViewModelKey(SearchViewModel::class)
+    abstract fun bindUserSearchViewModel(vm: SearchViewModel): ViewModel
 }

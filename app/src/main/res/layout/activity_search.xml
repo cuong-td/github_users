@@ -7,7 +7,7 @@
 
         <variable
             name="bindingModel"
-            type="star.global.gitusers.presentation.search.UserSearchBindingModel" />
+            type="star.global.gitusers.presentation.search.SearchBindingModel" />
     </data>
 
     <LinearLayout

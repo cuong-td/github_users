@@ -1,7 +1,11 @@
 package star.global.gitusers.data.remote.response
 
+import com.google.gson.annotations.SerializedName
+
 data class UserSearchDto(
-    val incomplete_results: Boolean?,
+    @SerializedName("incomplete_results")
+    val incompleteResults: Boolean?,
     val items: List<BriefUserDto>?,
-    val total_count: Int?
+    @SerializedName("total_count")
+    val totalCount: Int?
 )

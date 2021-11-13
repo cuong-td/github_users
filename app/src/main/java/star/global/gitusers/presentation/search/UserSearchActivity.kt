@@ -2,13 +2,14 @@ package star.global.gitusers.presentation.search
 
 import android.os.Bundle
 import android.os.SystemClock
-import android.view.inputmethod.EditorInfo
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.widget.doAfterTextChanged
+import androidx.appcompat.widget.SearchView
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import star.global.gitusers.App
 import star.global.gitusers.R
 import star.global.gitusers.databinding.ActivitySearchBinding
@@ -22,9 +23,6 @@ class UserSearchActivity : AppCompatActivity() {
     private val viewModel by viewModels<UserSearchViewModel> { vmFactory }
 
     private lateinit var viewBinding: ActivitySearchBinding
-
-    private val UserSearchBindingModel?.searchData: String
-        get() = this?.keyword?.get() ?: ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,19 +41,19 @@ class UserSearchActivity : AppCompatActivity() {
                 )
             }
 
-            etSearch.setOnEditorActionListener { _, actionId, _ ->
-                var overrideAction: Boolean = false
-                when (actionId) {
-                    EditorInfo.IME_ACTION_SEARCH -> {
-                        search(true)
-                        overrideAction = true
+            with(searchView) {
+                setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                    override fun onQueryTextSubmit(query: String): Boolean {
+                        search(query, true)
+                        return true
                     }
-                }
-                overrideAction
-            }
 
-            etSearch.doAfterTextChanged {
-                search()
+                    override fun onQueryTextChange(newText: String): Boolean {
+                        search(newText, newText.isEmpty())
+                        return true
+                    }
+
+                })
             }
 
             with(rvResults) {
@@ -69,6 +67,27 @@ class UserSearchActivity : AppCompatActivity() {
                         DividerItemDecoration.VERTICAL
                     )
                 )
+                addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                    private var loading = true
+
+                    override fun onScrolled(rv: RecyclerView, dx: Int, dy: Int) {
+                        if (dy > 0) { //check for scroll down
+                            val visibleItemCount = rv.layoutManager?.childCount ?: 0
+                            val totalItemCount = rv.layoutManager?.itemCount ?: 0
+                            val pastVisibleItems = (rv.layoutManager as? LinearLayoutManager)
+                                ?.findFirstVisibleItemPosition()
+                                ?: 0
+
+                            if (loading) {
+                                if ((visibleItemCount + pastVisibleItems) >= totalItemCount) {
+                                    loading = false
+                                    viewModel.searchNext()
+                                    loading = true
+                                }
+                            }
+                        }
+                    }
+                })
             }
         }
 
@@ -80,19 +99,22 @@ class UserSearchActivity : AppCompatActivity() {
 
             // Handle more
             when (it) {
-                SearchState.LoadingState -> hideKeyboard()
+                is SearchState.LoadingState -> {
+                    if (it.firstLoading)
+                        hideKeyboard()
+                }
                 else -> {
                 }
             }
         }
     }
 
-    private fun search(force: Boolean = false) {
+    private fun search(query: String, force: Boolean = false) {
         if (force) {
-            viewModel.search(viewBinding.bindingModel.searchData)
+            viewModel.search(query)
             hideKeyboard()
         } else
-            viewModel.processSearching(viewBinding.bindingModel.searchData)
+            viewModel.processSearching(query)
     }
 
 }

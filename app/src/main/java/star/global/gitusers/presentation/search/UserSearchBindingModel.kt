@@ -14,8 +14,9 @@ class UserSearchBindingModel {
     val loadingVisibility = ObservableInt(View.GONE)
     val dataVisibility = ObservableInt(View.GONE)
 
-    val keyword = ObservableField("")
     val users = ObservableField<List<BriefUser>>(emptyList())
+    val totalUsers = ObservableInt(0)
+    val loadedUsers = ObservableInt(0)
 
     fun bind(context: Context, state: SearchState) {
         when (state) {
@@ -25,10 +26,10 @@ class UserSearchBindingModel {
                 dataVisibility.set(View.GONE)
                 errorMessage.set(context.getString(R.string.no_data))
             }
-            SearchState.LoadingState -> {
+            is SearchState.LoadingState -> {
                 loadingVisibility.set(View.VISIBLE)
                 errorVisibility.set(View.GONE)
-                dataVisibility.set(View.GONE)
+                dataVisibility.set(if (state.firstLoading) View.GONE else View.VISIBLE)
             }
             is SearchState.ErrorState -> {
                 loadingVisibility.set(View.GONE)
@@ -47,6 +48,8 @@ class UserSearchBindingModel {
                 errorVisibility.set(View.GONE)
                 dataVisibility.set(View.VISIBLE)
                 users.set(state.data)
+                totalUsers.set(state.total)
+                loadedUsers.set(state.data.count())
             }
         }
     }

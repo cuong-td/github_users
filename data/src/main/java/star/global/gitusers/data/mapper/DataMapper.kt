@@ -3,8 +3,10 @@ package star.global.gitusers.data.mapper
 import retrofit2.HttpException
 import star.global.gitusers.data.remote.response.BriefUserDto
 import star.global.gitusers.data.remote.response.UserDto
+import star.global.gitusers.data.remote.response.UserSearchDto
 import star.global.gitusers.domain.Error
 import star.global.gitusers.domain.user.BriefUser
+import star.global.gitusers.domain.user.SearchData
 import star.global.gitusers.domain.user.User
 import java.io.IOException
 import java.net.UnknownHostException
@@ -32,4 +34,9 @@ fun UserDto.toUser(): User = User(
 fun BriefUserDto.toUser(): BriefUser = BriefUser(
     username = login,
     avatarUrl = avatar_url ?: "",
+)
+
+fun UserSearchDto.toModel(): SearchData = SearchData(
+    total = totalCount ?: 0,
+    users = items?.map { it.toUser() } ?: emptyList()
 )

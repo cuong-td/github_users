@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -15,28 +16,48 @@
         android:orientation="vertical"
         android:padding="@dimen/margin_padding_size_medium">
 
-        <EditText
-            android:id="@+id/et_search"
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/search_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/hint_search"
-            android:imeOptions="actionSearch"
-            android:inputType="text"
-            android:text="@={bindingModel.keyword}" />
+            app:defaultQueryHint="@string/hint_search"
+            app:queryHint="@string/hint_search" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:text="@{@string/search_counter(bindingModel.loadedUsers, bindingModel.totalUsers)}"
+            android:visibility="@{bindingModel.dataVisibility}"
+            tools:text="Found 0/0" />
 
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="@dimen/margin_padding_size_medium">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_results"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:visibility="@{bindingModel.dataVisibility}"
-                app:dataSrc="@{bindingModel.users}"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_results"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:visibility="@{bindingModel.dataVisibility}"
+                    app:dataSrc="@{bindingModel.users}"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+                <ProgressBar
+                    android:id="@+id/loading"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="@{bindingModel.loadingVisibility}" />
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/tv_err"
@@ -47,12 +68,6 @@
                 android:textSize="@dimen/text_size_large"
                 android:visibility="@{bindingModel.errorVisibility}" />
 
-            <ProgressBar
-                android:id="@+id/loading"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:visibility="@{bindingModel.loadingVisibility}" />
         </FrameLayout>
 
     </LinearLayout>

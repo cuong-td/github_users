@@ -2,10 +2,6 @@
     <string name="app_name">Git Users</string>
     <string name="hint_search">Search User</string>
 
-    <string name="title_date">Date:</string>
-    <string name="title_average_temperature">Average temperature:</string>
-    <string name="title_pressure">Pressure:</string>
-    <string name="title_humidity">Humidity:</string>
-    <string name="title_description">Description:</string>
     <string name="no_data">No data</string>
+    <string name="search_counter">Found %d/%d</string>
 </resources>

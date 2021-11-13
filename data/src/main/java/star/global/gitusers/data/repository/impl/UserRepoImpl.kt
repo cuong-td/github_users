@@ -2,6 +2,7 @@ package star.global.gitusers.data.repository.impl
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import star.global.gitusers.data.mapper.toModel
 import star.global.gitusers.data.mapper.toUser
 import star.global.gitusers.data.remote.RemoteSource
 import star.global.gitusers.data.remote.request.toQueryFormat
@@ -10,7 +11,7 @@ import star.global.gitusers.data.repository.UserRepository
 import star.global.gitusers.domain.Either
 import star.global.gitusers.domain.Error
 import star.global.gitusers.domain.right
-import star.global.gitusers.domain.user.BriefUser
+import star.global.gitusers.domain.user.SearchData
 import star.global.gitusers.domain.user.User
 import javax.inject.Inject
 
@@ -20,10 +21,10 @@ constructor(private val remoteSource: RemoteSource) : UserRepository, BaseReposi
     override suspend fun fetchUsers(
         keyword: String,
         page: Int
-    ): Flow<Either<Error, List<BriefUser>>> = flow {
+    ): Flow<Either<Error, SearchData>> = flow {
         val either = safeExecution {
             val dto = remoteSource.fetchUsers(keyword.toQueryFormat(), page)
-            dto.items?.map { it.toUser() }?.right() ?: throw NullPointerException()
+            dto.toModel().right()
         }
         emit(either)
     }

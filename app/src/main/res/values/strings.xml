@@ -4,4 +4,14 @@
 
     <string name="no_data">No data</string>
     <string name="search_counter">Found %d/%d</string>
+
+    <string name="name">Name</string>
+    <string name="company">Company</string>
+    <string name="location">Location</string>
+    <string name="email">Email</string>
+    <string name="bio">Bio</string>
+    <string name="repos">Public Repos</string>
+    <string name="gists">Public Gists</string>
+    <string name="followers">Followers: %d</string>
+    <string name="following">Following: %d</string>
 </resources>

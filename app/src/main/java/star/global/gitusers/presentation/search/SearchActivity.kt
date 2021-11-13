@@ -1,7 +1,6 @@
 package star.global.gitusers.presentation.search
 
 import android.os.Bundle
-import android.os.SystemClock
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
@@ -14,6 +13,7 @@ import star.global.gitusers.App
 import star.global.gitusers.R
 import star.global.gitusers.databinding.ActivitySearchBinding
 import star.global.gitusers.extension.hideKeyboard
+import star.global.gitusers.presentation.user.UserDetailActivity
 import javax.inject.Inject
 
 class SearchActivity : AppCompatActivity() {
@@ -58,8 +58,7 @@ class SearchActivity : AppCompatActivity() {
 
             with(rvResults) {
                 adapter = SearchAdapter {
-                    // Open User Detail
-                    println("TdcTest: Click open detail - ${it.username}: " + SystemClock.elapsedRealtime())
+                    UserDetailActivity.open(context, username = it.username, avatar = it.avatarUrl)
                 }
                 addItemDecoration(
                     DividerItemDecoration(

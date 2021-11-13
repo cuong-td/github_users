@@ -15,14 +15,12 @@ import star.global.gitusers.domain.left
 import star.global.gitusers.domain.right
 import star.global.gitusers.domain.user.BriefUser
 import star.global.gitusers.usecase.FindUsers
-import star.global.gitusers.usecase.GetUserDetail
 import javax.inject.Inject
 
 class SearchViewModel
 @Inject
 constructor(
     private val findUsers: FindUsers,
-    private val getUser: GetUserDetail,
     private val dispatcher: CoroutineDispatcher
 ) : BaseViewModel() {
     companion object {

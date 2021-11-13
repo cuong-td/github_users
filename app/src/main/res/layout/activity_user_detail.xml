@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="bindingModel"
+            type="star.global.gitusers.presentation.user.UserDetailBindingModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="@dimen/margin_padding_size_medium"
+        tools:context=".presentation.user.UserDetailActivity">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1" />
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_user"
+                    app:imageSrc="@{bindingModel.avatar}"
+                    tools:ignore="ContentDescription" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top|center_horizontal"
+                    android:background="@color/bg_transparent"
+                    android:text="@{bindingModel.username}"
+                    tools:text="username" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|start"
+                    android:background="@color/bg_transparent"
+                    android:text="@{@string/followers(bindingModel.followers)}"
+                    tools:text="followers" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|end"
+                    android:background="@color/bg_transparent"
+                    android:text="@{@string/following(bindingModel.following)}"
+                    tools:text="following" />
+
+            </FrameLayout>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1" />
+
+        </LinearLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <include
+                    layout="@layout/item_user_detail"
+                    app:content="@{bindingModel.name}"
+                    app:title="@{@string/name}" />
+
+                <include
+                    layout="@layout/item_user_detail"
+                    app:content="@{bindingModel.company}"
+                    app:title="@{@string/company}" />
+
+                <include
+                    layout="@layout/item_user_detail"
+                    app:content="@{bindingModel.location}"
+                    app:title="@{@string/location}" />
+
+                <include
+                    layout="@layout/item_user_detail"
+                    app:content="@{bindingModel.email}"
+                    app:title="@{@string/email}" />
+
+                <include
+                    layout="@layout/item_user_detail"
+                    app:content="@{bindingModel.bio}"
+                    app:title="@{@string/bio}" />
+
+                <include
+                    layout="@layout/item_user_detail"
+                    app:content="@{bindingModel.repos}"
+                    app:title="@{@string/repos}" />
+
+                <include
+                    layout="@layout/item_user_detail"
+                    app:content="@{bindingModel.gists}"
+                    app:title="@{@string/gists}" />
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+</layout>

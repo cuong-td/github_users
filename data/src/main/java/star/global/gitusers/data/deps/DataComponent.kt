@@ -1,6 +1,5 @@
 package star.global.gitusers.data.deps
 
-import star.global.gitusers.data.local.LocalSource
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
@@ -10,9 +9,6 @@ import javax.inject.Singleton
 interface DataComponent : DataExposeApiProvider {
     @Component.Builder
     interface Builder {
-        @BindsInstance
-        fun bindLocalSource(localSource: LocalSource): Builder
-
         @BindsInstance
         fun bindConfigurations(configs: DataConfigs): Builder
 

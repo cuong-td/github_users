@@ -1,5 +1,7 @@
 package star.global.gitusers.data.deps
 
+import star.global.gitusers.data.repository.UserRepository
+
 interface DataExposeApiProvider {
-    // TODO: Declare repositories interface here to publish
+    val userRepo: UserRepository
 }

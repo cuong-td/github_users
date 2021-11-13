@@ -1,6 +1,5 @@
 package star.global.gitusers.data.deps
 
-import star.global.gitusers.data.remote.RemoteSource
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
@@ -9,11 +8,11 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import star.global.gitusers.data.remote.RemoteSource
 import java.util.concurrent.TimeUnit
 import javax.inject.Named
 import javax.inject.Singleton
 
-internal const val API_KEY_CONFIG = "DATA_PROVIDER_API_CONFIG"
 private const val URL_CONFIG = "DATA_PROVIDER_URL_CONFIG"
 
 @Module
@@ -21,11 +20,7 @@ class NetworkModule {
 
     @Provides
     @Singleton
-    fun provideGsonBuilder(): GsonBuilder = GsonBuilder()
-
-    @Provides
-    @Singleton
-    fun provideGson(builder: GsonBuilder): Gson = builder.create()
+    fun provideGson(): Gson = GsonBuilder().create()
 
     @Provides
     @Singleton
@@ -51,11 +46,6 @@ class NetworkModule {
     @Singleton
     @Named(URL_CONFIG)
     fun provideBaseUrl(dataConfigs: DataConfigs): String = dataConfigs.baseUrl
-
-    @Provides
-    @Singleton
-    @Named(API_KEY_CONFIG)
-    fun provideApiKey(dataConfigs: DataConfigs): String = dataConfigs.apiKey
 
     @Provides
     @Singleton

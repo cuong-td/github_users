@@ -14,8 +14,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyCodebase">
-        <activity android:name=".presentation.user.UserDetailActivity" />
-        <activity android:name=".presentation.search.SearchActivity">
+        <activity
+            android:name=".presentation.user.UserDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".presentation.search.SearchActivity"
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

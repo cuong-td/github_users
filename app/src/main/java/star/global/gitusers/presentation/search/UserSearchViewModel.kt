@@ -35,6 +35,8 @@ constructor(
     private var page: Int = 0
     private var lastKeywords = ""
     private var lastResults: List<BriefUser> = emptyList()
+    private var hasMoreData: Boolean = true
+
     private var searchJob: Job? = null
     private var processSearchingJob: Job? = null
 
@@ -67,6 +69,7 @@ constructor(
                         }
                         is Either.Right -> {
                             lastResults = lastResults + it.right.users
+                            hasMoreData = it.right.total > lastResults.count()
                             if (lastResults.isEmpty())
                                 searchState.setData(SearchState.ErrorState(R.string.err_not_found.left()))
                             else
@@ -87,7 +90,8 @@ constructor(
     }
 
     fun searchNext() {
-        search(lastKeywords, page + 1)
+        if (hasMoreData)
+            search(lastKeywords, page + 1)
     }
 
     fun processSearching(keywords: String) {

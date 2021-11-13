@@ -1,9 +1,11 @@
 package star.global.gitusers.data.mapper
 
 import retrofit2.HttpException
+import star.global.gitusers.data.remote.response.BriefUserDto
 import star.global.gitusers.data.remote.response.UserDto
 import star.global.gitusers.domain.Error
-import star.global.gitusers.domain.User
+import star.global.gitusers.domain.user.BriefUser
+import star.global.gitusers.domain.user.User
 import java.io.IOException
 import java.net.UnknownHostException
 
@@ -25,4 +27,9 @@ fun UserDto.toUser(): User = User(
     following = following ?: 0,
     repos = public_repos ?: 0,
     gists = public_gists ?: 0,
+)
+
+fun BriefUserDto.toUser(): BriefUser = BriefUser(
+    username = login,
+    avatarUrl = avatar_url ?: "",
 )

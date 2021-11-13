@@ -1,4 +1,4 @@
-package star.global.gitusers.domain
+package star.global.gitusers.domain.user
 
 data class User(
     val username: String,

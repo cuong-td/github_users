@@ -1,7 +1,5 @@
 package star.global.gitusers.repo
 
-import junit.framework.Assert.assertTrue
-import junit.framework.TestCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
@@ -11,6 +9,7 @@ import kotlinx.coroutines.test.runBlockingTest
 import kotlinx.coroutines.test.setMain
 import org.junit.After
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -74,16 +73,16 @@ class RepoTest {
             assertTrue(either is Either.Right)
             with((either as Either.Right).right) {
                 assertTrue(username.startsWith(query))
-                TestCase.assertEquals("N/A", name)
-                TestCase.assertEquals("", avatarUrl)
-                TestCase.assertEquals("N/A", company)
-                TestCase.assertEquals("N/A", location)
-                TestCase.assertEquals("N/A", email)
-                TestCase.assertEquals("N/A", bio)
-                TestCase.assertEquals(0, followers)
-                TestCase.assertEquals(0, following)
-                TestCase.assertEquals(0, repos)
-                TestCase.assertEquals(0, gists)
+                assertEquals("N/A", name)
+                assertEquals("", avatarUrl)
+                assertEquals("N/A", company)
+                assertEquals("N/A", location)
+                assertEquals("N/A", email)
+                assertEquals("N/A", bio)
+                assertEquals(0, followers)
+                assertEquals(0, following)
+                assertEquals(0, repos)
+                assertEquals(0, gists)
             }
         }
     }

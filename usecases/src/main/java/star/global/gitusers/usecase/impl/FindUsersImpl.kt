@@ -7,5 +7,6 @@ import javax.inject.Inject
 class FindUsersImpl
 @Inject
 constructor(private val repo: UserRepository) : FindUsers {
-    override suspend fun invoke(keywords: String, page: Int) = repo.fetchUsers(keywords, page)
+    override suspend fun invoke(keywords: String, page: Int) =
+        repo.fetchUsers("$keywords in:username", page)
 }

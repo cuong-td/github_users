@@ -9,7 +9,7 @@ import star.global.gitusers.domain.user.User
 
 interface UserRepository {
     suspend fun fetchUsers(
-        keyword: String,
+        query: String,
         page: Int = 1
     ): Flow<Either<Error, SearchData>>
 

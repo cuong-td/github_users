@@ -5,7 +5,6 @@ import kotlinx.coroutines.flow.flow
 import star.global.gitusers.data.mapper.toModel
 import star.global.gitusers.data.mapper.toUser
 import star.global.gitusers.data.remote.RemoteSource
-import star.global.gitusers.data.remote.request.toQueryFormat
 import star.global.gitusers.data.repository.BaseRepository
 import star.global.gitusers.data.repository.UserRepository
 import star.global.gitusers.domain.Either
@@ -19,11 +18,11 @@ class UserRepoImpl
 @Inject
 constructor(private val remoteSource: RemoteSource) : UserRepository, BaseRepository() {
     override suspend fun fetchUsers(
-        keyword: String,
+        query: String,
         page: Int
     ): Flow<Either<Error, SearchData>> = flow {
         val either = safeExecution {
-            val dto = remoteSource.fetchUsers(keyword.toQueryFormat(), page)
+            val dto = remoteSource.fetchUsers(query, page)
             dto.toModel().right()
         }
         emit(either)

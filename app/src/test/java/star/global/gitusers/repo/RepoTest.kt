@@ -1,6 +1,7 @@
 package star.global.gitusers.repo
 
 import junit.framework.Assert.assertTrue
+import junit.framework.TestCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
@@ -21,6 +22,7 @@ import star.global.gitusers.data.repository.impl.UserRepoImpl
 import star.global.gitusers.domain.Either
 import star.global.gitusers.domain.Error
 import star.global.gitusers.genSearchData
+import star.global.gitusers.genUserDetail
 
 @RunWith(MockitoJUnitRunner::class)
 @ExperimentalCoroutinesApi
@@ -59,6 +61,29 @@ class RepoTest {
                     "https://images.unsplash.com/photo-1453728013993-6d66e9c9123a?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dmlld3xlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60",
                     users.first().avatarUrl
                 )
+            }
+        }
+    }
+
+    @Test
+    fun `check success get detail from remote`() {
+        val query = "data"
+        dispatcher.runBlockingTest {
+            `when`(remoteSource.fetchUserDetail(query)).thenReturn(genUserDetail(query))
+            val either = repo.fetchUser(query).first()
+            assertTrue(either is Either.Right)
+            with((either as Either.Right).right) {
+                assertTrue(username.startsWith(query))
+                TestCase.assertEquals("N/A", name)
+                TestCase.assertEquals("", avatarUrl)
+                TestCase.assertEquals("N/A", company)
+                TestCase.assertEquals("N/A", location)
+                TestCase.assertEquals("N/A", email)
+                TestCase.assertEquals("N/A", bio)
+                TestCase.assertEquals(0, followers)
+                TestCase.assertEquals(0, following)
+                TestCase.assertEquals(0, repos)
+                TestCase.assertEquals(0, gists)
             }
         }
     }

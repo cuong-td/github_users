@@ -26,6 +26,7 @@ import star.global.gitusers.domain.Error
 import star.global.gitusers.domain.left
 import star.global.gitusers.domain.right
 import star.global.gitusers.genSearchData
+import star.global.gitusers.usecase.impl.FindUsersImpl
 
 @RunWith(MockitoJUnitRunner::class)
 @ExperimentalCoroutinesApi
@@ -34,7 +35,7 @@ class FindUsersTest {
     private lateinit var repo: UserRepository
 
     @InjectMocks
-    private lateinit var findUsers: FindUsers
+    private lateinit var findUsers: FindUsersImpl
 
     private val dispatcher = TestCoroutineDispatcher()
 
@@ -53,7 +54,7 @@ class FindUsersTest {
     fun `check success search data from repo`() {
         dispatcher.runBlockingTest {
             val keyword = "data"
-            `when`(repo.fetchUsers("$keyword in:name")).thenReturn(flow {
+            `when`(repo.fetchUsers("$keyword in:username")).thenReturn(flow {
                 emit(genSearchData().toModel().right())
             })
             val either = findUsers(keyword, 1).first()

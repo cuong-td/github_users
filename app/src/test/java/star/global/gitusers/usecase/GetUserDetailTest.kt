@@ -23,6 +23,7 @@ import star.global.gitusers.data.repository.UserRepository
 import star.global.gitusers.domain.Either
 import star.global.gitusers.domain.right
 import star.global.gitusers.genUserDetail
+import star.global.gitusers.usecase.impl.GetUserImpl
 
 @RunWith(MockitoJUnitRunner::class)
 @ExperimentalCoroutinesApi
@@ -31,7 +32,7 @@ class GetUserDetailTest {
     private lateinit var repo: UserRepository
 
     @InjectMocks
-    private lateinit var getUser: GetUserDetail
+    private lateinit var getUser: GetUserImpl
 
     private val dispatcher = TestCoroutineDispatcher()
 
